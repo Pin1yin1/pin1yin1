@@ -1,0 +1,10 @@
+*~
+vendor/bundle/
+.bundle
+db/*.sqlite3
+tmp/
+public/stylesheets/*.css
+public/assets/
+index/
+.sass-cache/
+log/

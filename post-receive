@@ -1,0 +1,6 @@
+#!/bin/bash -l
+
+cd $GIT_DIR/..
+unset GIT_DIR
+git merge --ff-only master && rvm rvmrc load && bundle && RAILS_ENV=production rake assets:precompile
+git status

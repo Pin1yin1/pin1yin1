@@ -1,0 +1,25 @@
+- if @primary_definitions.length > 0
+  = render :partial => "definition", :locals => {:definitions => @primary_definitions, :dl_class => "primary"}
+- else
+  %dl.primary_definitions
+    %dt= @zi.character
+    %dd
+
+%table
+  %tr
+    %th strokes
+    %td= @zi.strokes
+  %tr
+    %th radical
+    %td
+      - s = @zi.radical_zi_simplified.character
+      - t = @zi.radical_zi_traditional.character
+      %div.show_simplified
+        %span.characters= link_to s, :action => :radical, :c => s
+      %div.show_traditional
+        %span.characters= link_to t, :action => :radical, :c => t
+  %tr
+    %th strokes after radical
+    %td= @zi.strokes_after_radical
+
+= render :partial => "definition", :locals => {:definitions => @secondary_definitions, :dl_class => "secondary"}

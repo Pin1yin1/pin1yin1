@@ -1,0 +1,9 @@
+%dl{:class => dl_class}
+  - definitions.each do |definition|
+    %dt
+      %span.conversion
+        %span.s= definition.characters_simplified
+        %span.t= definition.characters_traditional
+        %span.p= definition.pinyin_ascii_tone
+    %dd= definition.english
+    %br.clear/

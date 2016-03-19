@@ -1,0 +1,19 @@
+common: &common
+  adapter: mysql2
+  encoding: utf8
+  reconnect: false
+  username: pin1yin1
+  password: <%= ENV["PIN1YIN1_#{Rails.env.upcase}_PASSWORD"] %>
+  pool: 5
+
+development:
+  <<: *common
+  database: pin1yin1_development
+
+test:
+  <<: *common
+  database: pin1yin1_test
+
+production:
+  <<: *common
+  database: pin1yin1_production

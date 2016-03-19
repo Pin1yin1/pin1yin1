@@ -1,0 +1,10 @@
+- strokes = -1
+<span>
+- radical_list.each do |radical|
+  - if radical.strokes != strokes
+    </span>
+    - strokes = radical.strokes
+    %h2.radical_list_strokes= strokes
+    <span>
+  = link_to radical.character, :action => :radical, :c => radical.character
+</span>

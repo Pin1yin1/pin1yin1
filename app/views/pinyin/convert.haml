@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+%body
+  %s= @conversion[:characters_simplified]
+  %t= @conversion[:characters_traditional]
+  %p
+    - @conversion[:pinyin_ascii_tone].each do |syllable|
+      %pi= syllable
+  %e
+    - @conversion[:english].each do |english|
+      %ei= english
+  %c
+    - @conversion[:english_character_count].each do |count|
+      %ci= count

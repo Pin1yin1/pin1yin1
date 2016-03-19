@@ -1,0 +1,13 @@
+%form
+  %textarea.characters#input{:type => :text, :rows => 6, :cols => 40}
+  %input{:type => :button, :value => "Convert", :onclick => "buttonClick()"}
+%div#conversion
+  This is a simple tool designed to help students of Mandarin Chinese
+  learn the thousands of characters (hànzì) of the Chinese writing
+  system. To use it, simply copy passages from the web into the text
+  box, and they will be annotated with hànyǔ pīnyīn or zhùyīn
+  pronunciation symbols. Click on any character for a more detailed
+  definition with a full list of usage examples. With pin1yin1.com you
+  can get out onto the web and start reading Chinese now!
+  %a{:href=>"#床前明月光%0A疑是地上霜%0A举头望明月%0A低头思故乡"}
+    See an example...

@@ -1,0 +1,59 @@
+%html
+  %head
+    - @title ||= "Pin1yin1.com Pinyin Converter and Mandarin Chinese Dictionary"
+    %title= @title
+    = stylesheet_link_tag "application", :media => "all"
+    = stylesheet_link_tag "print", :media => "print"
+    = javascript_include_tag "application"
+    = csrf_meta_tag
+    %meta{charset: 'utf-8'}
+  %body
+    %div#holder
+      %div#holder2
+        %div#menu
+          = tab :convert, "Pinyin converter", :controller => :pinyin, :action => :form
+          = tab :dictionary, "Dictionary", :controller => :dictionary
+          = tab :links, "Links", :controller => :static, :action => :links
+          = tab :about, "About", :controller => :static, :action => :about
+        %div#settings
+          %select#romanization
+            %option{:value => :pinyin} pīnyīn
+            %option{:value => :pinyin_ascii} pin1yin1
+            %option{:value => :zhuyin} ㄓㄨㄧㄣ
+          %select#variant
+            %option{:value => :simplified} simplified
+            %option{:value => :traditional} traditional
+        %div#content
+          = yield
+          %br.clear
+          - unless BadWords.match?(@title)
+            %div.googlead
+              :plain
+                <script type="text/javascript"><!--
+                google_ad_client = "ca-pub-2957831382585370";
+                /* pinyin_bottom */
+                google_ad_slot = "1421033257";
+                google_ad_width = 728;
+                google_ad_height = 15;
+                //-->
+                </script>
+                <script type="text/javascript"
+                src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+                </script>
+      %div#sidebar
+        %h2= link_to "Pin1yin1.com blog", "http://blog.pin1yin1.com"
+        %div#blogtop
+        %div#blogmore
+    :plain
+      <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-24184794-1']);
+        _gaq.push(['_trackPageview']);
+      
+        (function() {
+          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+      </script>
+	

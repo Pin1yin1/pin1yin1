@@ -1,0 +1,10 @@
+- strokes_after_radical = -1
+<span>
+- zi_list.each do |zi|
+  - if zi.strokes_after_radical != strokes_after_radical
+    </span>
+    - strokes_after_radical = zi.strokes_after_radical
+    %h2.strokes_after_radical= strokes_after_radical
+    <span>
+  = link_to zi.character, :action => :zi, :c => zi.character
+</span>

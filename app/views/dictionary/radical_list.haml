@@ -1,0 +1,6 @@
+%div.show_simplified
+  %h1 Radical index (simplified)
+  =render :partial => "radical_index_list", :locals => { :radical_list => @radical_list_simplified }
+%div.show_traditional
+  %h1 Radical index (traditional)
+  =render :partial => "radical_index_list", :locals => { :radical_list => @radical_list_traditional }

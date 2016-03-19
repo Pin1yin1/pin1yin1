@@ -1,0 +1,6 @@
+%div.show_simplified
+  %h1= @radical_simplified
+  =render :partial => "radical_zi_list", :locals => { :zi_list => @zi_list_simplified }
+%div.show_traditional
+  %h1= @radical_traditional
+  =render :partial => "radical_zi_list", :locals => { :zi_list => @zi_list_traditional }

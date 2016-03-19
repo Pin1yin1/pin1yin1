@@ -1,0 +1,19 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  tone: 1
+  pinyin: MyString
+  pinyin: MyString
+  pinyin_ascii: MyString
+  pinyin_ascii_tone: MyString
+  zhuyin: MyString
+  zhuyin_tone: MyString
+
+two:
+  tone: 1
+  pinyin: MyString
+  pinyin: MyString
+  pinyin_ascii: MyString
+  pinyin_ascii_tone: MyString
+  zhuyin: MyString
+  zhuyin_tone: MyString
