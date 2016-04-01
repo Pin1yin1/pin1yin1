@@ -21,8 +21,8 @@ For openSUSE/SLES:
 
 Create a new configuration file ('cnf') for Pin1yin1 in the appropriate
 location for your distribution:
-* Ubuntu/Debian: /etc/mysql/conf.d/pin1yin1.cnf
-* RHEL/CentOS/Fedora/SUSE: /etc/my.cnf.d/pin1yin1.cnf
+* Ubuntu/Debian: `/etc/mysql/conf.d/pin1yin1.cnf`
+* RHEL/CentOS/Fedora/SUSE: `/etc/my.cnf.d/pin1yin1.cnf`
 
 Then edit the `[mysqld]` section, set the following keys to enable
 useful options and the UTF-8 character set:
@@ -37,9 +37,9 @@ character-set-server = utf8
 ```
 
 Restart the service to allow the changes to take effect:
-* Ubuntu/Debian: service mysql restart
-* RHEL/CentOS/Fedora: systemctl enable mariadb.service; systemctl start mariadb.service
-* SUSE: systemctl enable mysql.service; systemctl start mysql.service
+* Ubuntu/Debian: `service mysql restart`
+* RHEL/CentOS/Fedora: `systemctl enable mariadb.service; systemctl start mariadb.service`
+* SUSE: `systemctl enable mysql.service; systemctl start mysql.service`
 
 Finally, secure the database by running `mysql_secure_installation`
 
@@ -48,7 +48,8 @@ Finally, secure the database by running `mysql_secure_installation`
 
 `$ mysql -u root -p`
 
-```CREATE DATABASE pin1yin1_test;
+```
+CREATE DATABASE pin1yin1_test;
 CREATE DATABASE pin1yin1_development;
 GRANT ALL PRIVILEGES ON pin1yin1_development.* TO 'pin1yin1'@'localhost' \
   IDENTIFIED BY 'PIN1YIN1_DBPASS';
@@ -61,11 +62,13 @@ GRANT ALL PRIVILEGES ON pin1yin1_test.* TO 'pin1yin1'@'%' \
 ```
 
 ## Install Ruby
+
 The version of ruby required by Pin1yin1 is specified in `.ruby-version`.
 If you have this version already, you can skip this section.
 
 First, set up [chruby](https://github.com/postmodern/chruby)) to deal with
 managing multiple ruby versions on your system. For example, version 0.3.9
+
 ```
 $ wget -O chruby-0.3.9.tar.gz https://github.com/postmodern/chruby/archive/v0.3.9.tar.gz
 $ tar -xzvf chruby-0.3.9.tar.gz
@@ -73,8 +76,9 @@ $ cd chruby-0.3.9/
 $ sudo make install
 ```
 
-adding the lines to ~/.bashrc is recommended - since chruby can automatically
+adding the lines to `~/.bashrc` is recommended - since chruby can automatically
 change to the right version of ruby when you `cd` to the pin1yin1 directory:
+
 ```
 source /usr/local/share/chruby/chruby.sh
 source /usr/local/share/chruby/auto.sh
