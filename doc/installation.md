@@ -149,8 +149,9 @@ you can set up a server running Pin1yin1.
 
 To start a development server on port 18380, run:
 
+```
 $ export PIN1YIN1_DEVELOPMENT_PASSWORD=PIN1YIN1_DBPASS
 $ bundle exec thin start -e development -p 18380 -d
-
+```
 
 
