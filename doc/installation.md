@@ -121,6 +121,7 @@ $ rake db:setup
 ```
 
 ## Importing dictionary data
+
 Now it is time to import all of the dictionary data.
 This takes several minutes, so get ready to take a break while the import runs.
 
@@ -140,4 +141,16 @@ with:
     PIN1YIN1_TEST_PASSWORD=password bundle exec rake spec
 
 where "password" is your test database password.
+
+## Starting a server
+
+Now that you have the database and application configured,
+you can set up a server running Pin1yin1.
+
+To start a development server on port 18380, run:
+
+$ export PIN1YIN1_DEVELOPMENT_PASSWORD=PIN1YIN1_DBPASS
+$ bundle exec thin start -e development -p 18380 -d
+
+
 
