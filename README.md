@@ -48,6 +48,5 @@ send me a pull request via GitHub.
 
 ## Documentation TODO
 
-* Step-by-step database setup.
 * Procedure for importing dictionary data.
 * Deployment process.
