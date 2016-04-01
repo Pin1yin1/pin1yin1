@@ -121,7 +121,16 @@ $ rake db:setup
 ```
 
 ## Importing dictionary data
-TBC
+Now it is time to import all of the dictionary data.
+This takes several minutes, so get ready to take a break while the import runs.
+
+`$ bundle exec rake db:import`
+
+Note that by default, the data will be imported to the development
+environment. If you want to import it into the test or production environment,
+simply export the appropriate RAILS_ENV. For example:
+
+`$ RAILS_ENV=production bundle exec rake db:import`
 
 ## Testing the install
 There is a (currently small) rspec-based test suite included. If you
