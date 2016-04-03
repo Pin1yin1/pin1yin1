@@ -155,3 +155,11 @@ $ export PIN1YIN1_DEVELOPMENT_PASSWORD=PIN1YIN1_DBPASS
 $ bundle exec rails server
 ```
 
+## Optional environment variables
+
+Set BAD_WORDS_FILE to a file that contains a list of English words,
+one per line. If any of these words appears on a page, ads will not be
+shown. This is required to avoid getting blocked by Google. Read [the
+AdSense
+policy](https://support.google.com/adsense/answer/1348688?hl=en) for
+more information.
