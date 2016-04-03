@@ -117,8 +117,8 @@ Now, run the DB setup:
 ```
 $ export PIN1YIN1_TEST_PASSWORD=PIN1YIN1_DBPASS
 $ export PIN1YIN1_DEVELOPMENT_PASSWORD=PIN1YIN1_DBPASS
-$ rake db:create
-$ rake db:migrate
+$ bundle exec rake db:create
+$ bundle exec rake db:migrate
 ```
 
 ## Importing dictionary data
@@ -152,6 +152,6 @@ To start a development server, run:
 
 ```
 $ export PIN1YIN1_DEVELOPMENT_PASSWORD=PIN1YIN1_DBPASS
-$ rails server
+$ bundle exec rails server
 ```
 
