@@ -49,9 +49,10 @@ while line = file.gets
     syllable = "er5" if syllable == "r5"
     syllable.downcase! if syllable =~ /[A-Z].*[0-9]/ # proper nouns are capitalized in cedict
 
-    if syllable =~ /[A-Z]/ || # skip capital letters used to represent the english alphabet
+    if syllable =~ /^[A-Za-z]$/ || # skip single letters used to represent the english alphabet
       syllable =~ /[,·]/ || # punctuation
-      syllable == "xx5" # no pronunciation    
+      syllable == "xx5" || # no pronunciation
+      syllable == "ging1" # no pronunciation
       "-"
     else
       raise "line #{line_num}: no such syllable '#{syllable}'" if !valid_syllables[syllable]
