@@ -68,7 +68,7 @@ class FileReader
 end
 
 # import RAdical/Stroke count data
-file = FileReader.open Rails.root+"data/Unihan_RadicalStrokeCounts.txt"
+file = FileReader.open Rails.root+"data/Unihan_IRGSources.txt"
 
 while line = file.gets
   (zi,key,value) = file.parse_entry(line)
