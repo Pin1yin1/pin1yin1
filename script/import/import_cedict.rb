@@ -21,13 +21,10 @@ while line = file.gets
   character = [hex_code.hex].pack("U")
 
   if key == "kMandarin"
-    p = value.split(/\s/)
-    if p.length > 1
-      primary_pronunciations[character] = p[0].downcase
-    end
+      # in Unicode 8, only the primary pronunciation is provided
+      primary_pronunciations[character] = value
   end
 end
-
 
 file = File.open(Rails.root+"data/cedict_ts.u8")
 Definition.delete_all(:active => false)
@@ -73,9 +70,11 @@ while line = file.gets
   end
 
   primary = "0"
-  if simplified.length == 1
-    if (pinyin_ascii_tone == primary_pronunciations[simplified] ||
-        pinyin_ascii_tone == primary_pronunciations[traditional])
+  if simplified.length == 1 and pinyin_ascii_tone != '-'
+    # in Unicode 8, the file format is unicode with accents, rather than ascii
+    pinyin_uni_tone = Syllable.pinyin_ascii_to_pinyin_uni(pinyin_ascii_tone)
+    if (pinyin_uni_tone == primary_pronunciations[simplified] ||
+        pinyin_uni_tone == primary_pronunciations[traditional])
       primary = "1"
     end
   end
