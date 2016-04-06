@@ -16,7 +16,8 @@ class DictionaryController < ApplicationController
       if Zi.character_is_chinese(@query[0].ord)
         @definitions = Definition.where("characters_simplified like ? or characters_traditional like ?", @query+"%", @query+"%")
       else
-        @definitions = Definition.find_with_index(@query)
+        ids = Definition.find_with_index(@query, {}, ids_only: true)
+        @definitions = Definition.where(id: ids)
       end
     elsif @pinyin.length > 2
       @query = ""
