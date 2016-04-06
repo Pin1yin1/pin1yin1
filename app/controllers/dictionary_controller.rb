@@ -19,10 +19,10 @@ class DictionaryController < ApplicationController
         ids = Definition.find_with_index(@query, {}, ids_only: true)
         @definitions = Definition.where(id: ids)
       end
-    elsif @pinyin.length > 2
+    elsif @pinyin.length > 0
       @query = ""
       title @pinyin + " - Chinese Dictionary Search - Pin1yin1.com"
-      @definitions = Definition.where("pinyin_ascii like ?", @pinyin+"%")
+      @definitions = Definition.where("pinyin_ascii like ?", @pinyin+"%").limit(150)
     end
   end
 
