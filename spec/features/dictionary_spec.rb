@@ -17,6 +17,7 @@ feature 'Dictionary', js: true do
   specify do
     {
       'nihao' => 'hello',
+      'ni3hao3' => 'hello',
       'xian' => 'first',
       'xi an' => 'Xi-an',
       'xio' => 'Western Europe',

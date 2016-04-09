@@ -295,7 +295,7 @@ function dictionaryPinyinSubmit()
       new_val += new_letter
     }
   }
-  $("#dictionary_pinyin_input").val(new_val)
+  $("#dictionary_pinyin_input").val(new_val.trim())
   return true
 }
 
