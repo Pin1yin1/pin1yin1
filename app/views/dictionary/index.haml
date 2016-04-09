@@ -1,9 +1,11 @@
-%form{:action => url_for(:action => :search), :method => :get}
-  Enter English or Chinese:
-  %input{:type => :text, :name => :q}
-  %input{:type => :submit, :name => "submit", :value => "Search"}
-%form{:action => url_for(:action => :search), :method => :get, :id => "dictionary_pinyin"}
-  Enter pinyin:
-  %input{:type => :text, :name => :p, :id => "dictionary_pinyin_input"}
-  %input{:type => :submit, :name => "submit", :value => "Search by pinyin"}
-=link_to "Radical index", :action => :radical_list
+%form{action: url_for(action: :search), method: :get}
+  %label{for: 'dictionary_search_input'}
+    Enter English or Chinese:
+  %input{type: :text, name: :q, id: 'dictionary_search_input'}
+  %input{type: :submit, name: 'submit', value: 'Search'}
+%form{action: url_for(action: :search), method: :get, id: 'dictionary_pinyin'}
+  %label{for: 'dictionary_pinyin_input'}
+    Enter pinyin:
+  %input{type: :text, name: :p, id: 'dictionary_pinyin_input'}
+  %input{type: :submit, name: 'submit', value: 'Search by pinyin'}
+=link_to 'Radical index', action: :radical_list

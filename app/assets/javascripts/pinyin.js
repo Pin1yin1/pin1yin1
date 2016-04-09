@@ -255,6 +255,8 @@ function dictionaryPinyinSubmit()
   {
     // decide whether to add a space before sticking the character in
     new_letter = pinyin[i]
+    next_letter = pinyin[i+1] || ""
+    next_next_letter = pinyin[i+2] || ""
     if(new_letter == " ")
     {
       // new syllable
@@ -277,6 +279,8 @@ function dictionaryPinyinSubmit()
       
       if(bopomofo[current_syllable+"1"] != undefined &&
 	 bopomofo[new_syllable+"1"] == undefined &&
+	 bopomofo[new_syllable+next_letter+"1"] == undefined &&
+	 bopomofo[new_syllable+next_letter+next_next_letter+"1"] == undefined &&
 	 current_syllable != "")
       {
 	// adding the character would stop a valid syllable
