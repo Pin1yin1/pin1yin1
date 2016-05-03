@@ -4,6 +4,7 @@ Zi.connection.execute 'alter table zi disable keys'
 Zi.delete_all(:active => false)
 
 ZI_HASH = {} # indexed by character
+ZI_ID_HASH = {} # indexed by id
 
 result = Zi.connection.execute 'select max(id) from zi'
 result.each do |row|
@@ -17,10 +18,13 @@ def find_or_create(hex_code)
 
   character = [hex_code.hex].pack("U")
 
-  if !ZI_HASH[character] 
+  if !ZI_HASH[character]
     ZI_HASH[character] =
-      Zi.new(:character => character, :strokes => 0, :radical => 0, :strokes_after_radical => 0, :is_radical => 0, :is_radical_simplified => 0, :phonetic => 0, :is_phonetic => 0, :active => false)
+      Zi.new(character: character, strokes: 0, radical: 0, strokes_after_radical: 0,
+             is_radical: 0, is_radical_simplified: 0, phonetic: 0, is_phonetic: 0,
+             active: false, frequency: 6, grade_level: 7)
     ZI_HASH[character].id = $id # this must be done *after* new
+    ZI_ID_HASH[$id] = ZI_HASH[character]
     $id += 1
   end
   return ZI_HASH[character]
@@ -67,7 +71,7 @@ class FileReader
   end
 end
 
-# import RAdical/Stroke count data
+# import Radical/Stroke count data
 file = FileReader.open Rails.root+"data/Unihan_IRGSources.txt"
 
 while line = file.gets
@@ -114,13 +118,17 @@ while line = file.gets
   (zi,key,value) = file.parse_entry(line)
   next if !zi
 
-  if key == "kTotalStrokes"
+  case key
+  when 'kTotalStrokes'
     zi.strokes = value.to_i
-    file.raise "bad total strokes #{value}" if zi.strokes == 0 
-  end
-  if key == "kPhonetic"
+    file.raise "bad total strokes #{value}" if zi.strokes == 0
+  when 'kPhonetic'
     zi.phonetic = value.to_i
-    file.raise "bad phonetic #{value}" if zi.phonetic == 0 
+    file.raise "bad phonetic #{value}" if zi.phonetic == 0
+  when 'kFrequency'
+    zi.frequency = value.to_i
+  when 'kGradeLevel'
+    zi.grade_level = value.to_i
   end
 end
 
@@ -186,19 +194,34 @@ result.each do |row|
   end
 end
 
+def replace_if_lower(a, b, field)
+  if b[field] < a[field]
+    a[field] = b[field]
+  end
+end
+
+# Give simplified Zis data from their traditional variants.
+ZI_HASH.each_value do |zi|
+  zi_s = ZI_ID_HASH[zi.simplified_zi_id]
+  next if !zi_s
+
+  replace_if_lower(zi_s, zi, :frequency)
+  replace_if_lower(zi_s, zi, :grade_level)
+end
+
 # save all zis using a bulk method
 sql = nil
 i = 0
 ZI_HASH.each_value do |zi|
   i += 1
   if !sql
-    sql = "insert into zi (id,`character`,strokes,radical,strokes_after_radical,is_radical,is_radical_simplified,phonetic,is_phonetic,simplified_zi_id,is_simplified,is_traditional,active) values ";
+    sql = "insert into zi (id,`character`,strokes,radical,strokes_after_radical,is_radical,is_radical_simplified,phonetic,is_phonetic,simplified_zi_id,is_simplified,is_traditional,frequency,grade_level,active) values ";
   else
     sql += ","
   end
 
   sql += <<END
-(#{zi.id},'#{zi.character}',#{zi.strokes || 'NULL'},#{zi.radical || 'NULL'},#{zi.strokes_after_radical || 'NULL'},#{zi.is_radical || 'NULL'},#{zi.is_radical_simplified || 'NULL'},#{zi.phonetic || 'NULL'},#{zi.is_phonetic || 'NULL'},#{zi.simplified_zi_id || 'NULL'},#{zi.is_simplified ? 1 : 0},#{zi.is_traditional ? 1 : 0},0)
+(#{zi.id},'#{zi.character}',#{zi.strokes},#{zi.radical},#{zi.strokes_after_radical},#{zi.is_radical},#{zi.is_radical_simplified},#{zi.phonetic},#{zi.is_phonetic},#{zi.simplified_zi_id || 'NULL'},#{zi.is_simplified},#{zi.is_traditional},#{zi.frequency},#{zi.grade_level},0)
 END
   if sql.length > 2000
     Zi.connection.execute(sql)

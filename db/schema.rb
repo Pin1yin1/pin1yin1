@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160101202939) do
+ActiveRecord::Schema.define(version: 20160503042430) do
 
   create_table "definition_characters", force: :cascade do |t|
     t.integer "definition_id", limit: 4,                 null: false
@@ -64,6 +64,8 @@ ActiveRecord::Schema.define(version: 20160101202939) do
     t.boolean "is_simplified",                   default: false, null: false
     t.boolean "is_traditional",                  default: false, null: false
     t.integer "is_radical_simplified", limit: 1,                 null: false
+    t.integer "frequency",             limit: 1,                 null: false
+    t.integer "grade_level",           limit: 1,                 null: false
   end
 
   add_index "zi", ["active"], name: "index_zi_on_active", using: :btree
