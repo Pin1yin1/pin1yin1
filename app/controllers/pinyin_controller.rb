@@ -23,7 +23,7 @@ class PinyinController < ApplicationController
 }
 END
 
-    render :text => json, :content_type => "text/plain"
+    render :plain => json, :content_type => "text/plain"
   end
 
   def form
