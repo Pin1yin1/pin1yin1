@@ -7,7 +7,7 @@ Pin1yin1::Application.configure do
   # and recreated between test runs. Don't rely on the data there!
   config.cache_classes = true
 
-  config.serve_static_files = true
+  config.public_file_server.enabled = true
 
   config.eager_load = false
 
