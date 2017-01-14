@@ -1,5 +1,5 @@
 # encoding: UTF-8
-class Definition < ActiveRecord::Base
+class Definition < ApplicationRecord
   acts_as_indexed :fields => [:english]
 
   def english_abbreviated

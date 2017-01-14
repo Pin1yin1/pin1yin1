@@ -1,3 +1,3 @@
-class DefinitionCharacter < ActiveRecord::Base
+class DefinitionCharacter < ApplicationRecord
   has_one :definition
 end

@@ -1,4 +1,4 @@
-class Zi < ActiveRecord::Base
+class Zi < ApplicationRecord
   def primary_definitions
     Definition.joins("inner join definition_characters on definition_id=definitions.id and definition_characters.character='#{character}' and definitions.active and definition_characters.active").where("char_length(definitions.characters_simplified) = 1").order("`primary` desc, definitions.pinyin_ascii_tone asc")
   end
