@@ -30,7 +30,7 @@ end
 
 
 file = File.open(Rails.root+"data/cedict_ts.u8")
-Definition.delete_all(:active => false)
+Definition.where(:active => false).delete_all
 line_num = 0
 sql = nil
 while line = file.gets
@@ -107,5 +107,5 @@ end
 
 puts ""
 Definition.connection.execute "update definitions set active = !active"
-Definition.delete_all :active => false
+Definition.where(:active => false).delete_all
 Definition.connection.execute 'alter table definitions enable keys'
