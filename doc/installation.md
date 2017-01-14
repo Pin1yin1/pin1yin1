@@ -94,7 +94,7 @@ sudo make install
 ```
 
 Install the required version into /usr/local:
-`$  ruby-install --system ruby 2.1.3`
+`$  ruby-install --system ruby 2.4.0`
 
 ## Install the pre-requisites
 In the pin1yin1 directory, run the following commands to get the required gems:
