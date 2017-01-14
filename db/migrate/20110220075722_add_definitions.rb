@@ -1,4 +1,4 @@
-class AddDefinitions < ActiveRecord::Migration
+class AddDefinitions < ActiveRecord::Migration[4.2]
   def self.up
     create_table :definitions, :options => "default charset=utf8" do |t|
       t.column :characters_simplified, :string, :null => false

@@ -1,4 +1,4 @@
-class CreateZis < ActiveRecord::Migration
+class CreateZis < ActiveRecord::Migration[4.2]
   def self.up
     create_table :zi, :options => "default charset=utf8" do |t|
       t.column :character, "char(1)", :null => false

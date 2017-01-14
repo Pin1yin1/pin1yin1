@@ -1,4 +1,4 @@
-class SyllableIndexes < ActiveRecord::Migration
+class SyllableIndexes < ActiveRecord::Migration[4.2]
   def self.up
     change_table :syllables do |t|
       t.index :pinyin_ascii
