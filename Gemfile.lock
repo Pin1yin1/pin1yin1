@@ -245,6 +245,3 @@ DEPENDENCIES
   thin
   uglifier
   unicorn
-
-BUNDLED WITH
-   1.13.7
