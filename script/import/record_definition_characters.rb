@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 DefinitionCharacter.connection.execute 'alter table definition_characters disable keys'
-DefinitionCharacter.delete_all :active => false
+DefinitionCharacter.where(:active => false).delete_all
 
 sql = nil
 i = 0
@@ -30,5 +30,5 @@ if sql
 end
 
 DefinitionCharacter.connection.execute "update definition_characters set active = !active"
-DefinitionCharacter.delete_all :active => false
+DefinitionCharacter.where(:active => false).delete_all
 DefinitionCharacter.connection.execute "alter table definition_characters enable keys"

@@ -1,4 +1,4 @@
-class LargerPhoneticField < ActiveRecord::Migration
+class LargerPhoneticField < ActiveRecord::Migration[4.2]
   def self.up
     change_column :zi, :phonetic, "integer unsigned", :null =>false
     change_column :zi, :is_phonetic, "integer unsigned", :null =>false

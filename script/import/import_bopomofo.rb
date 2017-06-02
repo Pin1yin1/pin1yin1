@@ -4,7 +4,7 @@ file = File.open(Rails.root+"data/bopomofo.dat")
 js = File.open(Rails.root+"app/assets/javascripts/bopomofo.js","w")
 js.puts("var bopomofo = {")
 
-Syllable.delete_all(:active => false)
+Syllable.where(:active => false).delete_all
 while bopomofo = file.gets
   bopomofo =~ /(.*) (.*)/
   zhuyin = $1
@@ -33,4 +33,4 @@ end
 js.puts("}")
 js.close
 Syllable.connection.execute "update syllables set active = !active"
-Syllable.delete_all :active => false
+Syllable.where(:active => false).delete_all

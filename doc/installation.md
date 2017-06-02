@@ -94,7 +94,7 @@ sudo make install
 ```
 
 Install the required version into /usr/local:
-`$  ruby-install --system ruby 2.1.3`
+`$  ruby-install --system ruby 2.4.0`
 
 ## Install the pre-requisites
 In the pin1yin1 directory, run the following commands to get the required gems:
@@ -115,6 +115,8 @@ pin1yin1. If that is different for you, edit `config/database.yml`
 Now, run the DB setup:
 
 ```
+$ export PIN1YIN1_TEST_USERNAME=pin1yin1
+$ export PIN1YIN1_DEVELOPMENT_USERNAME=pin1yin1
 $ export PIN1YIN1_TEST_PASSWORD=PIN1YIN1_DBPASS
 $ export PIN1YIN1_DEVELOPMENT_PASSWORD=PIN1YIN1_DBPASS
 $ bundle exec rake db:create

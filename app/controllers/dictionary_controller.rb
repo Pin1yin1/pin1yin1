@@ -1,5 +1,5 @@
 class DictionaryController < ApplicationController
-  before_filter :active_tab_dictionary
+  before_action :active_tab_dictionary
 
   def index
     title "Chinese Dictionary - Pin1yin1.com"

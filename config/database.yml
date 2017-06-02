@@ -2,7 +2,7 @@ common: &common
   adapter: mysql2
   encoding: utf8
   reconnect: false
-  username: pin1yin1
+  username: <%= ENV["PIN1YIN1_#{Rails.env.upcase}_USERNAME"] %>
   password: <%= ENV["PIN1YIN1_#{Rails.env.upcase}_PASSWORD"] %>
   pool: 5
 

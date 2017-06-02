@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 Zi.connection.execute 'alter table zi disable keys'
 
-Zi.delete_all(:active => false)
+Zi.where(:active => false).delete_all
 
 ZI_HASH = {} # indexed by character
 
@@ -219,7 +219,7 @@ sql = "update zi set is_traditional = true, is_simplified = false, simplified_zi
 Zi.connection.execute(sql)
 
 Zi.connection.execute "update zi set active = !active"
-Zi.delete_all :active => false
+Zi.where(:active => false).delete_all
 Zi.connection.execute 'alter table zi enable keys'
 
               

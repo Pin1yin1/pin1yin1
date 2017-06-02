@@ -1,5 +1,5 @@
 # encoding: UTF-8
-class Syllable < ActiveRecord::Base
+class Syllable < ApplicationRecord
   @@accents = {
     "a" => ['ā','á','ǎ','à','a'],
     "e" => ['ē','é','ě','è','e'],

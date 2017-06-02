@@ -1,4 +1,4 @@
-class CreateSyllables < ActiveRecord::Migration
+class CreateSyllables < ActiveRecord::Migration[4.2]
   def self.up
     create_table :syllables, :options => "default charset=utf8" do |t|
       t.integer :tone, :null => false, :limit => 1
