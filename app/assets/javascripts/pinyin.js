@@ -9,7 +9,7 @@ function myEncodeURI(s)
   for(i=0;i<s.length;i++)
   {
     if(s[i] <= '\xff')
-      out += encodeURI(s[i]);
+      out += encodeURIComponent(s[i]);
     else
       out += s[i]; // do not encode chinese characters 
   }
@@ -31,7 +31,7 @@ function updatePinyin()
     $('#pinyin').text("");
     $('#english').text("");
   }
-  $.getJSON("/pinyin/convert/?c="+encodeURI(new_val), updatePinyinSuccess);
+  $.getJSON("/pinyin/convert/?c="+encodeURIComponent(new_val), updatePinyinSuccess);
   last_val = new_val;
 }
 
@@ -180,7 +180,7 @@ function buttonClick()
 
 function hashChange()
 {
-  $('#input').val(decodeURI(window.location.hash.substr(1)));
+  $('#input').val(decodeURIComponent(window.location.hash.substr(1)));
   if(conversion != null && conversion.q == $('#input').val())
   {
     showConversion();    
