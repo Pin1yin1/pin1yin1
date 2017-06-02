@@ -11,5 +11,9 @@ describe BadWords do
         expect(BadWords.match?(word)).to eq true
       end
     end
+
+    it 'returns false for "blah"' do
+      expect(BadWords.match?('blah')).to eq false
+    end
   end
 end

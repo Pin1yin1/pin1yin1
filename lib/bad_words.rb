@@ -8,8 +8,8 @@ class BadWords
   end
 
   def self.match?(s)
-    bad_words_list.each do |word|
-      return true if s =~ /#{word}/i
+    bad_words_list.any? do |word|
+      s =~ /#{word}/i
     end
   end
 end

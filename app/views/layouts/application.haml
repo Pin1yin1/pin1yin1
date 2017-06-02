@@ -1,3 +1,4 @@
+- require 'bad_words'
 %html
   %head
     - @title ||= "Pin1yin1.com Pinyin Converter and Mandarin Chinese Dictionary"
@@ -29,16 +30,14 @@
           - unless BadWords.match?(@title)
             %div.googlead
               :plain
-                <script type="text/javascript"><!--
-                google_ad_client = "ca-pub-2957831382585370";
-                /* pinyin_bottom */
-                google_ad_slot = "1421033257";
-                google_ad_width = 728;
-                google_ad_height = 15;
-                //-->
-                </script>
-                <script type="text/javascript"
-                src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+                <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+                <!-- bottom -->
+                <ins class="adsbygoogle"
+                style="display:inline-block;width:728px;height:90px"
+                data-ad-client="ca-pub-2957831382585370"
+                data-ad-slot="4463998904"></ins>
+                <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
                 </script>
       %div#sidebar
         %h2= link_to "Pin1yin1.com blog", "http://blog.pin1yin1.com"
