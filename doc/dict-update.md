@@ -36,6 +36,12 @@ ftp://ftp.unicode.org/Public/9.0.0/ucd/Unihan.zip
 CJKRadicals.txt, which provide the eg Kangxi radical information is found
 outside of Unihan.zip, at ftp://ftp.unicode.org/Public/9.0.0/ucd/CJKRadicals.txt
 
+When Unicode is updated, it is often necessary to update the regular
+expressions found in the import scripts. Where the syntax of these fields
+is changed, it's noted in the release notes on the information link. The new
+expressions can be found in the table for the field available at the same site,
+eg http://www.unicode.org/reports/tr38/#kRSUnicode
+
 ## Re-Importing dictionary data
 
 After updating any data, follow the steps in the install guide to
