@@ -74,7 +74,7 @@ while line = file.gets
   (zi,key,value) = file.parse_entry(line)
   next if !zi
   if key == "kRSUnicode"
-    file.raise "bad kRSUnicode" if !(value =~ /([0-9]+)(\'?)\.([0-9]+)/)
+    file.raise "bad kRSUnicode" if !(value =~ /([0-9]+)(\'?)\.(-?[0-9]+)/)
     zi.radical = $1.to_i
     zi.strokes_after_radical = $3.to_i
   end
