@@ -134,20 +134,22 @@ function makeConversionTable(simplified, traditional, pinyin_s, english)
 function showConversion()
 {
   var data = conversion;
+  var s = Array.from(data.s);
+  var t = Array.from(data.t);
   ci = 0;
   var table_array = new Array();
   for(var i=0;i<data.e.length;i++)
   {
     var chars = data.c[i];
-    if(data.s.charAt(ci) == '\n')
+    if(s[ci] == '\n')
     {
       ci += 1;
       table_array.push("<br class='clear'/>\n");
       continue;
     }
 
-    simplified = data.s.substring(ci,ci+chars);
-    traditional = data.t.substring(ci,ci+chars);
+    simplified = s.slice(ci,ci+chars);
+    traditional = t.slice(ci,ci+chars);
     pinyin = ""
     for(var j=0;j<chars;j++)
     {
@@ -159,7 +161,7 @@ function showConversion()
 
     // check for newline
     var span_class
-    if(data.s.charAt(ci) == "\n" || ci == data.s.length)
+    if(s[ci] == "\n" || ci == s.length)
       span_class = 'conversion end_of_line'
     else
       span_class = 'conversion'
