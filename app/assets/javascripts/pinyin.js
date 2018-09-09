@@ -148,8 +148,8 @@ function showConversion()
       continue;
     }
 
-    simplified = s.slice(ci,ci+chars);
-    traditional = t.slice(ci,ci+chars);
+    simplified = s.slice(ci,ci+chars).join('');
+    traditional = t.slice(ci,ci+chars).join('');
     pinyin = ""
     for(var j=0;j<chars;j++)
     {
