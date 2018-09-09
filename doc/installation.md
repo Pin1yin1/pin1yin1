@@ -4,10 +4,10 @@ This document runs through the steps to install a version of the Pin1yin1.com
 Pinyin converter.
 
 ## Install the database
-MySQL is the default database for Pin1yin1.com.
+MariaDB is the default database for Pin1yin1.com.
 
 For Ubuntu:
-`# apt-get install mariadb-server`
+`# apt-get install mariadb-server libmariadbclient-dev`
 
 For Debian:
 `# apt-get install mysql-server`

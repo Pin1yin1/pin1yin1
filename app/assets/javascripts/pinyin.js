@@ -68,10 +68,10 @@ function makeConversionTable(simplified, traditional, pinyin_s, english)
   var pinyin_pieces = pinyin_s.split(" ");
   var pinyin_texts = new Array()
 
-  var characters = (v_simplified() ? simplified : traditional);
+  var characters = Array.from(v_simplified() ? simplified : traditional);
   for(var j=0;j<characters.length;j++)
   {
-    var val = formatZi(characters.charAt(j))
+    var val = formatZi(characters[j])
     s += "<td>"+val+"</td>";
     if(r_zhuyin())
     {
