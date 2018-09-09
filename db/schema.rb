@@ -10,16 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160101202939) do
+ActiveRecord::Schema.define(version: 20180909054125) do
 
-  create_table "definition_characters", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "definition_characters", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
     t.integer "definition_id",                           null: false
     t.string  "character",     limit: 1,                 null: false
     t.boolean "active",                  default: false, null: false
     t.index ["character"], name: "index_definition_characters_on_character", using: :btree
   end
 
-  create_table "definitions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "definitions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
     t.string  "characters_simplified",                  null: false
     t.string  "characters_traditional",                 null: false
     t.string  "pinyin_ascii_tone",                      null: false
@@ -27,13 +27,13 @@ ActiveRecord::Schema.define(version: 20160101202939) do
     t.string  "english",                                null: false
     t.boolean "active",                 default: false, null: false
     t.boolean "primary",                default: false, null: false
-    t.index ["characters_simplified"], name: "index_definitions_on_characters_simplified", using: :btree
-    t.index ["characters_traditional"], name: "index_definitions_on_characters_traditional", using: :btree
-    t.index ["pinyin_ascii"], name: "index_definitions_on_pinyin_ascii", using: :btree
-    t.index ["pinyin_ascii_tone"], name: "index_definitions_on_pinyin_ascii_tone", using: :btree
+    t.index ["characters_simplified"], name: "index_definitions_on_characters_simplified", length: { characters_simplified: 191 }, using: :btree
+    t.index ["characters_traditional"], name: "index_definitions_on_characters_traditional", length: { characters_traditional: 191 }, using: :btree
+    t.index ["pinyin_ascii"], name: "index_definitions_on_pinyin_ascii", length: { pinyin_ascii: 191 }, using: :btree
+    t.index ["pinyin_ascii_tone"], name: "index_definitions_on_pinyin_ascii_tone", length: { pinyin_ascii_tone: 191 }, using: :btree
   end
 
-  create_table "syllables", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "syllables", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
     t.integer "tone",              limit: 1,                 null: false
     t.string  "pinyin",            limit: 6,                 null: false
     t.string  "pinyin_ascii",      limit: 6,                 null: false
@@ -47,7 +47,7 @@ ActiveRecord::Schema.define(version: 20160101202939) do
     t.index ["zhuyin"], name: "index_syllables_on_zhuyin", using: :btree
   end
 
-  create_table "zi", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "zi", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci" do |t|
     t.string  "character",             limit: 1,                 null: false
     t.integer "strokes",               limit: 1,                 null: false
     t.integer "radical",               limit: 1,                 null: false, unsigned: true
