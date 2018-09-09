@@ -46,6 +46,12 @@ Finally, secure the database by running `mysql_secure_installation`
 
 ## Configure the database
 
+TODO: explain how to get database into utf8mb4 mode:
+
+```
+ALTER DATABASE pin1yin1_development CHARACTER SET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+```
+
 `$ mysql -u root -p`
 
 ```
@@ -120,7 +126,7 @@ $ export PIN1YIN1_DEVELOPMENT_USERNAME=pin1yin1
 $ export PIN1YIN1_TEST_PASSWORD=PIN1YIN1_DBPASS
 $ export PIN1YIN1_DEVELOPMENT_PASSWORD=PIN1YIN1_DBPASS
 $ bundle exec rake db:create
-$ bundle exec rake db:migrate
+$ bundle exec rake db:schema:load
 ```
 
 ## Importing dictionary data
