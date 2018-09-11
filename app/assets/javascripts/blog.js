@@ -31,7 +31,7 @@ function blogLoad()
   var s = document.createElement('script')
   s.type = 'text/javascript'
   s.async = true
-  s.src = "http://blog.pin1yin1.com/api/read/json"
+  s.src = "https://pin1yin1.tumblr.com/api/read/json"
   var s0 = document.getElementsByTagName('script')[0]
   s0.parentNode.insertBefore(s, s0)
 }

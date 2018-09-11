@@ -142,6 +142,15 @@ simply export the appropriate RAILS_ENV. For example:
 
 `$ RAILS_ENV=production bundle exec rake db:import`
 
+You should also remove the fulltext index when changing the dictionary:
+
+`$ rm -r tmp/index`
+
+It will take several minutes to rebuilt when the first query is
+executed; you might want to do that from the command line with:
+
+`$ bundle exec rails runner 'Definition.find_with_index('apple', {}, ids_only: true)'`
+
 ## Testing the install
 There is a (currently small) rspec-based test suite included. If you
 have installed the software correctly, you should be able to run it

@@ -1,6 +1,6 @@
 # Pin1yin1.com Pinyin Converter source repository
 
-[Pin1yin1.com](http://www.pin1yin1.com/) is a simple tool designed to
+[Pin1yin1.com](https://www.pin1yin1.com/) is a simple tool designed to
 help students of Mandarin Chinese learn the thousands of characters
 (hànzì) of the Chinese writing system. To use it, you simply copy
 passages from the web into the text box, and they will be annotated
