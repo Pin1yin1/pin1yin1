@@ -5,6 +5,5 @@
 = require cookie.js
 = require jquery.ba-hashchange.min.js
 = require pinyin.js
-= require blog.js
 = require bopomofo.js
 */
