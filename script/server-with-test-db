@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+cd "$(dirname "${BASH_SOURCE[0]}")/.."
+
+export RAILS_ENV=test
+export MYSQL_UNIX_PORT="$PWD/tmp/mariadb/mysql.sock"
+export PIN1YIN1_TEST_USERNAME=root
+unset PIN1YIN1_TEST_PASSWORD
+
+if ! mariadb-admin --socket="$MYSQL_UNIX_PORT" -u root ping >/dev/null 2>&1; then
+  echo "Test database is not running. Start it in another terminal with: nix-shell --run 'bash script/test-db'" >&2
+  exit 1
+fi
+
+exec bundle exec rails server "$@"

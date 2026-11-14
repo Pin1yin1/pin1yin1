@@ -1,0 +1,125 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+cd "$(dirname "${BASH_SOURCE[0]}")/.."
+db_dir="$PWD/tmp/mariadb"
+socket="$db_dir/mysql.sock"
+action="${1:-start}"
+
+case "$action" in
+  start|reload|stop|status) ;;
+  *) echo "Usage: $0 [start|reload|stop|status]" >&2; exit 2 ;;
+esac
+
+running() {
+  mariadb-admin --socket="$socket" -u root ping >/dev/null 2>&1
+}
+
+if [[ "$action" == stop ]]; then
+  if running; then
+    mariadb-admin --socket="$socket" -u root shutdown
+    echo "Stopped MariaDB at $db_dir"
+  else
+    echo "MariaDB is already stopped."
+  fi
+  exit 0
+fi
+
+if [[ "$action" == status ]]; then
+  if running; then
+    echo "MariaDB is running at $socket"
+  else
+    echo "MariaDB is stopped."
+    exit 1
+  fi
+  exit 0
+fi
+
+mkdir -p "$db_dir"
+if [[ ! -d "$db_dir/data/mysql" ]]; then
+  if [[ -e "$db_dir/data" ]]; then
+    echo "Incomplete MariaDB data directory: $db_dir/data" >&2
+    exit 1
+  fi
+  mariadb-install-db --datadir="$db_dir/data" --auth-root-authentication-method=normal --skip-test-db >"$db_dir/install.log" 2>&1
+fi
+
+server_pid=
+if ! running; then
+  mariadbd --datadir="$db_dir/data" --socket="$socket" \
+    --pid-file="$db_dir/mysql.pid" --skip-networking \
+    --log-error="$db_dir/server.log" --character-set-server=utf8mb4 \
+    >"$db_dir/launcher.log" 2>&1 </dev/null &
+  server_pid=$!
+
+  for attempt in {1..120}; do
+    if running; then
+      break
+    fi
+    if ! kill -0 "$server_pid" 2>/dev/null; then
+      cat "$db_dir/server.log" >&2
+      exit 1
+    fi
+    sleep 0.25
+  done
+
+  if ! running; then
+    cat "$db_dir/server.log" >&2
+    echo "MariaDB did not start." >&2
+    exit 1
+  fi
+fi
+
+stop_started_server() {
+  if [[ -n "$server_pid" ]] && running; then
+    mariadb-admin --socket="$socket" -u root shutdown
+  fi
+}
+trap stop_started_server EXIT
+
+export MYSQL_UNIX_PORT="$socket"
+export PIN1YIN1_TEST_USERNAME=root
+export RAILS_ENV=test
+unset PIN1YIN1_TEST_PASSWORD
+
+database_exists=$(mariadb --socket="$socket" -u root --batch --skip-column-names \
+  -e "SELECT COUNT(*) FROM information_schema.schemata WHERE schema_name = 'pin1yin1_test'")
+
+if [[ "$database_exists" == 0 ]]; then
+  mariadb --socket="$socket" -u root \
+    -e 'CREATE DATABASE pin1yin1_test CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci'
+  needs_import=true
+else
+  table_count=$(mariadb --socket="$socket" -u root --batch --skip-column-names \
+    -e "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = 'pin1yin1_test'")
+  needs_import=false
+  if [[ "$table_count" == 0 ]]; then
+    needs_import=true
+  fi
+fi
+
+if [[ "$action" == reload || "$needs_import" == true ]]; then
+  echo "Loading schema and importing dictionary data into pin1yin1_test..."
+  bundle exec rake db:schema:load db:import
+fi
+
+dictionary_tables=$(mariadb --socket="$socket" -u root --batch --skip-column-names \
+  -e "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = 'pin1yin1_test' AND table_name IN ('syllables', 'definitions', 'zi', 'definition_characters')")
+if [[ "$dictionary_tables" != 4 ]]; then
+  echo "Existing test database is missing dictionary tables. Run '$0 reload' to rebuild it." >&2
+  exit 1
+fi
+
+counts=$(mariadb --socket="$socket" -u root pin1yin1_test --batch --skip-column-names \
+  -e 'SELECT (SELECT COUNT(*) FROM syllables), (SELECT COUNT(*) FROM definitions), (SELECT COUNT(*) FROM zi), (SELECT COUNT(*) FROM definition_characters)')
+read -r syllables definitions zi definition_characters <<< "$counts"
+if (( syllables == 0 || definitions == 0 || zi == 0 || definition_characters == 0 )); then
+  echo "Dictionary data is missing or was cleared by the specs. Run '$0 reload' to rebuild it." >&2
+  exit 1
+fi
+
+echo "Test database is ready at $socket ($definitions definitions, $zi characters)."
+if [[ -n "$server_pid" ]]; then
+  echo "Keeping MariaDB running. Press Ctrl+C to stop it."
+  wait "$server_pid"
+fi

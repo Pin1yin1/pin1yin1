@@ -48,10 +48,30 @@ loads the schema, and runs the specs with headless Chromium:
 
     nix-shell --run 'bash script/specs-in-nix'
 
+To keep a local MariaDB test database with the bundled dictionary data,
+run this from the repository root:
+
+    nix-shell --run 'bash script/test-db'
+
+The data is stored in `tmp/mariadb`. Keep that terminal open while using
+the database; press Ctrl+C to stop MariaDB. Running the command again
+keeps the existing data. To rebuild the database from the bundled data,
+or to stop the server from another terminal, run:
+
+    nix-shell --run 'bash script/test-db reload'
+    nix-shell --run 'bash script/test-db stop'
+
+With the database running in the first terminal, start the site in a
+second terminal:
+
+    nix-shell --run 'bash script/server-with-test-db'
+
+The spec suite truncates its test database. Use `script/specs-in-nix` to
+run specs without clearing the persistent imported data.
+
 Once you have a feature or bugfix that you would like to share, please
 send me a pull request via GitHub.
 
 ## Documentation TODO
 
-* Procedure for importing dictionary data.
 * Deployment process.
