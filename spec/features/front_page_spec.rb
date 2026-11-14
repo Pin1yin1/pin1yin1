@@ -37,7 +37,7 @@ feature "Front page", js: true do
     fill_in "input", with: "你好你\n好"
     click_button "Convert"
 
-    expect(page).to have_selector("textarea", text: "nǐ hǎo nǐ hǎo")
+    expect(page).to have_selector("textarea", text: "nǐ hǎo nǐ\nhǎo")
 
     # get raw html to check newline
     html = page.evaluate_script("document.getElementById('pinyin_text').innerHTML")

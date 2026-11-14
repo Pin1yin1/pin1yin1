@@ -2,8 +2,19 @@
 ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
-require 'capybara/poltergeist'
-Capybara.javascript_driver = :poltergeist
+require 'capybara/rspec'
+require 'selenium-webdriver'
+
+Capybara.register_driver :headless_chrome do |app|
+  options = Selenium::WebDriver::Chrome::Options.new
+  options.binary = ENV['CHROME_BIN'] if ENV['CHROME_BIN']
+  options.add_argument('--headless')
+  options.add_argument('--no-sandbox')
+  options.add_argument('--disable-dev-shm-usage')
+  service = Selenium::WebDriver::Chrome::Service.new(path: ENV['CHROMEDRIVER'])
+  Capybara::Selenium::Driver.new(app, browser: :chrome, options: options, service: service)
+end
+Capybara.javascript_driver = :headless_chrome
 
 # TODO: follow avdi database cleaner rules
 
@@ -39,5 +50,5 @@ RSpec.configure do |config|
   #     --seed 1234
   config.order = "random"
 
-  config.include FactoryGirl::Syntax::Methods
+  config.include FactoryBot::Syntax::Methods
 end

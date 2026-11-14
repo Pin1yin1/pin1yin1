@@ -43,6 +43,11 @@ with:
 
 where "password" is your test database password.
 
+With Nix, the following command starts a temporary MariaDB instance,
+loads the schema, and runs the specs with headless Chromium:
+
+    nix-shell --run 'bash script/specs-in-nix'
+
 Once you have a feature or bugfix that you would like to share, please
 send me a pull request via GitHub.
 

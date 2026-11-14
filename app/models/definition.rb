@@ -41,7 +41,7 @@ class Definition < ApplicationRecord
       end
 
       list = Definition.where("characters_simplified like ? or characters_traditional like ?", c+"%", c+"%").
-        order("length(characters_simplified) desc, \"primary\" desc")
+        order(Arel.sql("length(characters_simplified) desc, \"primary\" desc"))
       d = nil # default
       list.each do |definition|
         simplified = definition.characters_simplified

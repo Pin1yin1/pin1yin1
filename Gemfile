@@ -1,9 +1,15 @@
-source 'http://rubygems.org'
+source 'https://rubygems.org'
 
-gem 'rails'
-gem 'haml'
+gem 'rails', '~> 6.1.0'
+gem 'haml', '~> 5.2'
 gem 'sass'
-gem 'sass-rails'
+gem 'sass-rails', '~> 6.0'
+gem 'base64'
+gem 'mutex_m'
+gem 'observer'
+gem 'drb'
+gem 'rack', '~> 2.2'
+gem 'globalid', '~> 1.0.1'
 group :production do
   gem 'thin'
   gem 'unicorn'
@@ -19,14 +25,15 @@ group :development, :test do
   gem 'byebug'
   gem 'foreman'
   gem 'taps'
-  gem 'rspec-rails'
+  gem 'rspec-rails', '~> 6.0'
 end
 
 group :test do
-  gem "capybara"
-  gem "poltergeist"  # Requires you to install phantomjs; you should use chef (see the server_setup repo)
-  gem "factory_girl_rails"
-  gem "database_cleaner"
+  gem 'capybara', '~> 3.40'
+  gem 'selenium-webdriver', '~> 4.0'
+  gem 'puma', '~> 6.0'
+  gem 'factory_bot_rails', '~> 6.0'
+  gem 'database_cleaner-active_record', '~> 2.0'
   gem "guard"
   gem "guard-rspec"
   gem 'libnotify'
