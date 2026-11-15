@@ -1,0 +1,3 @@
+local:
+  service: Disk
+  root: <%= ENV.fetch('RAILS_STORAGE_ROOT', Rails.root.join('storage').to_s) %>

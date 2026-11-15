@@ -78,9 +78,9 @@ stop_started_server() {
 trap stop_started_server EXIT
 
 export MYSQL_UNIX_PORT="$socket"
-export PIN1YIN1_TEST_USERNAME=root
+export RAILS_TEST_USERNAME=root
 export RAILS_ENV=test
-unset PIN1YIN1_TEST_PASSWORD
+unset RAILS_TEST_PASSWORD
 
 database_exists=$(mariadb --socket="$socket" -u root --batch --skip-column-names \
   -e "SELECT COUNT(*) FROM information_schema.schemata WHERE schema_name = 'pin1yin1_test'")

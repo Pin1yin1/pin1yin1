@@ -2,8 +2,8 @@ development:
   adapter: mysql2
   encoding: utf8mb4
   reconnect: false
-  username: <%= ENV["PIN1YIN1_DEVELOPMENT_USERNAME"] %>
-  password: <%= ENV["PIN1YIN1_DEVELOPMENT_PASSWORD"] %>
+  username: <%= ENV["RAILS_DEVELOPMENT_USERNAME"] %>
+  password: <%= ENV["RAILS_DEVELOPMENT_PASSWORD"] %>
   pool: 5
   database: pin1yin1_development
 
@@ -11,8 +11,8 @@ test:
   adapter: mysql2
   encoding: utf8mb4
   reconnect: false
-  username: <%= ENV["PIN1YIN1_TEST_USERNAME"] %>
-  password: <%= ENV["PIN1YIN1_TEST_PASSWORD"] %>
+  username: <%= ENV["RAILS_TEST_USERNAME"] %>
+  password: <%= ENV["RAILS_TEST_PASSWORD"] %>
   pool: 5
   database: pin1yin1_test
 
@@ -20,7 +20,7 @@ production:
   adapter: mysql2
   encoding: utf8mb4
   reconnect: false
-  username: <%= ENV["PIN1YIN1_PRODUCTION_USERNAME"] %>
-  password: <%= ENV["PIN1YIN1_PRODUCTION_PASSWORD"] %>
+  username: <%= ENV["RAILS_PRODUCTION_USERNAME"] %>
+  password: <%= ENV["RAILS_PRODUCTION_PASSWORD"] %>
   pool: 5
-  database: pin1yin1_production
+  database: <%= ENV["RAILS_PRODUCTION_DATABASE"] %>

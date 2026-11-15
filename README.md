@@ -23,6 +23,61 @@ As described in `LICENSE.txt`, I have released the code under an MIT
 license. Some files in `data/` have their own licenses. Feel free to
 use this as the basis for your own alternative websites, apps, etc.
 
+## Nix production package
+
+From the repository root, build the package with:
+
+    nix-build
+
+You do not need to export any environment variables for this build.
+`default.nix` sets `RAILS_ENV=production`, a temporary
+`RAILS_SECRET_KEY_BASE`, and a build-time `RAILS_PRODUCTION_DATABASE`
+while it precompiles assets. These values do not set the secret or
+database used when the packaged site runs. The result is
+linked at `result/` and includes `shell.sh` for the packaged Ruby and
+gem environment.
+
+Set these variables when running the production package or production
+database tasks:
+
+| Variable | Purpose |
+| --- | --- |
+| `RAILS_ENV=production` | Selects the production configuration. |
+| `RAILS_PRODUCTION_DATABASE` | Name of the production MariaDB database. |
+| `RAILS_PRODUCTION_USERNAME` | MariaDB user for that database. |
+| `RAILS_PRODUCTION_PASSWORD` | Password for that MariaDB user. |
+| `RAILS_SECRET_KEY_BASE` | The site's real, persistent Rails secret key. |
+
+The package's `shell.sh` sets `RAILS_LOG_TO_STDOUT=1` and supplies Ruby,
+gem, and Chromium paths. It also defaults the search index and Active
+Storage directories to paths under `$HOME/.local/state/pin1yin1/`.
+Ensure that the runtime user can write there. Override these settings
+when needed:
+
+| Variable | When to set it |
+| --- | --- |
+| `MYSQL_UNIX_PORT` | MariaDB uses a nondefault Unix socket. |
+| `RAILS_SERVE_STATIC_FILES` | Set to any nonempty value to serve precompiled files from Rails. Leave unset or empty when another server serves them; even `false` enables it. |
+| `RAILS_INDEX_DIR` | Store the search index somewhere other than `$HOME/.local/state/pin1yin1/index`. |
+| `RAILS_STORAGE_ROOT` | Store Active Storage files somewhere other than `$HOME/.local/state/pin1yin1/storage`. |
+| `RAILS_BAD_WORDS_FILE` | Read a word list used to suppress ads on matching pages. |
+
+The database credentials and real secret are read at runtime; their
+values do not need to be passed to `nix-build` and are not included in
+the package.
+
+To initialize a new production database, set the required variables
+above, then run from the repository root:
+
+    cd result
+    ./shell.sh -c 'bundle exec rake db:create db:schema:load db:import'
+
+`db:create` requires the MariaDB user to have permission to create the
+database. If the database was created separately, run only
+`db:schema:load db:import`. Load the schema only into a new, empty
+database: it replaces existing tables. The import reads the bundled
+dictionary files and populates the lookup tables and search index.
+
 ## Contributing
 
 To contribute code, clone the repository and set up local
@@ -39,7 +94,7 @@ There is a (currently small) rspec-based test suite included. If you
 have installed the software correctly, you should be able to run it
 with:
 
-    PIN1YIN1_TEST_PASSWORD=password bundle exec rake spec
+    RAILS_TEST_PASSWORD=password bundle exec rake spec
 
 where "password" is your test database password.
 

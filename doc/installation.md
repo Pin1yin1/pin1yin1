@@ -58,13 +58,13 @@ ALTER DATABASE pin1yin1_development CHARACTER SET=utf8mb4 COLLATE=utf8mb4_unicod
 CREATE DATABASE pin1yin1_test;
 CREATE DATABASE pin1yin1_development;
 GRANT ALL PRIVILEGES ON pin1yin1_development.* TO 'pin1yin1'@'localhost' \
-  IDENTIFIED BY 'PIN1YIN1_DBPASS';
+  IDENTIFIED BY 'YOUR_DB_PASSWORD';
 GRANT ALL PRIVILEGES ON pin1yin1_development.* TO 'pin1yin1'@'%' \
-  IDENTIFIED BY 'PIN1YIN1_DBPASS';
+  IDENTIFIED BY 'YOUR_DB_PASSWORD';
 GRANT ALL PRIVILEGES ON pin1yin1_test.* TO 'pin1yin1'@'localhost' \
-  IDENTIFIED BY 'PIN1YIN1_DBPASS';
+  IDENTIFIED BY 'YOUR_DB_PASSWORD';
 GRANT ALL PRIVILEGES ON pin1yin1_test.* TO 'pin1yin1'@'%' \
-  IDENTIFIED BY 'PIN1YIN1_DBPASS';
+  IDENTIFIED BY 'YOUR_DB_PASSWORD';
 ```
 
 ## Install Ruby
@@ -121,10 +121,10 @@ pin1yin1. If that is different for you, edit `config/database.yml`
 Now, run the DB setup:
 
 ```
-$ export PIN1YIN1_TEST_USERNAME=pin1yin1
-$ export PIN1YIN1_DEVELOPMENT_USERNAME=pin1yin1
-$ export PIN1YIN1_TEST_PASSWORD=PIN1YIN1_DBPASS
-$ export PIN1YIN1_DEVELOPMENT_PASSWORD=PIN1YIN1_DBPASS
+$ export RAILS_TEST_USERNAME=pin1yin1
+$ export RAILS_DEVELOPMENT_USERNAME=pin1yin1
+$ export RAILS_TEST_PASSWORD=YOUR_DB_PASSWORD
+$ export RAILS_DEVELOPMENT_PASSWORD=YOUR_DB_PASSWORD
 $ bundle exec rake db:create
 $ bundle exec rake db:schema:load
 ```
@@ -142,6 +142,13 @@ simply export the appropriate RAILS_ENV. For example:
 
 `$ RAILS_ENV=production bundle exec rake db:import`
 
+The database import does not update `bopomofo.js`. After changing
+`data/bopomofo.dat`, regenerate that asset from a writable checkout with:
+
+`$ nix-shell --run 'bundle exec rake bopomofo:generate_js'`
+
+Rebuild the Nix package afterward so the updated asset is precompiled.
+
 You should also remove the fulltext index when changing the dictionary:
 
 `$ rm -r tmp/index`
@@ -156,7 +163,7 @@ There is a (currently small) rspec-based test suite included. If you
 have installed the software correctly, you should be able to run it
 with:
 
-    PIN1YIN1_TEST_PASSWORD=password bundle exec rake spec
+    RAILS_TEST_PASSWORD=password bundle exec rake spec
 
 where "password" is your test database password.
 
@@ -168,13 +175,13 @@ you can set up a server running Pin1yin1.
 To start a development server, run:
 
 ```
-$ export PIN1YIN1_DEVELOPMENT_PASSWORD=PIN1YIN1_DBPASS
+$ export RAILS_DEVELOPMENT_PASSWORD=YOUR_DB_PASSWORD
 $ bundle exec rails server
 ```
 
 ## Optional environment variables
 
-Set BAD_WORDS_FILE to a file that contains a list of English words,
+Set RAILS_BAD_WORDS_FILE to a file that contains a list of English words,
 one per line. If any of these words appears on a page, ads will not be
 shown. This is required to avoid getting blocked by Google. Read [the
 AdSense

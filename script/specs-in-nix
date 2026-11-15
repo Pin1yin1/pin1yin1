@@ -35,8 +35,9 @@ fi
 
 mariadb --socket="$db_dir/mysql.sock" -u root -e 'CREATE DATABASE pin1yin1_test CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci'
 export MYSQL_UNIX_PORT="$db_dir/mysql.sock"
-export PIN1YIN1_TEST_USERNAME=root
+export RAILS_TEST_USERNAME=root
 export RAILS_ENV=test
+unset RAILS_TEST_PASSWORD
 
 bundle exec rake db:schema:load
 bundle exec rake spec

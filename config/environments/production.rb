@@ -1,4 +1,6 @@
 Pin1yin1::Application.configure do
+  raise 'RAILS_PRODUCTION_DATABASE must be set' if ENV['RAILS_PRODUCTION_DATABASE'].blank?
+
   # Settings specified here will take precedence over those in config/application.rb
 
   # Code is not reloaded between requests
@@ -8,7 +10,7 @@ Pin1yin1::Application.configure do
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
 
-  config.public_file_server.enabled = false
+  config.public_file_server.enabled = ENV["RAILS_SERVE_STATIC_FILES"].present?
 
   config.eager_load = true
 
@@ -39,6 +41,10 @@ Pin1yin1::Application.configure do
 
   # Use a different logger for distributed setups
   # config.logger = ActiveSupport::TaggedLogging.new(SyslogLogger.new)
+  config.logger = ActiveSupport::TaggedLogging.new(ActiveSupport::Logger.new($stdout)) if ENV['RAILS_LOG_TO_STDOUT']
+
+  config.active_storage.service = :local
+  config.active_storage.variant_processor = :disabled
 
   # Use a different cache store in production
   # config.cache_store = :mem_cache_store
@@ -62,5 +68,5 @@ Pin1yin1::Application.configure do
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
 
-  config.secret_key_base = ENV['PIN1YIN1_SECRET_KEY_BASE']
+  config.secret_key_base = ENV['RAILS_SECRET_KEY_BASE']
 end
