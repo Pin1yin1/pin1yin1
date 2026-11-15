@@ -1,0 +1,7 @@
+export RAILS_ENV=test
+export RAILS_TEST_USERNAME=root
+unset RAILS_TEST_PASSWORD
+export MYSQL_UNIX_PORT="$PWD/tmp/mariadb/mysql.sock"
+export RAILS_INDEX_DIR="$PWD/tmp/package-test-index"
+
+bundle exec rake bopomofo:generate_js

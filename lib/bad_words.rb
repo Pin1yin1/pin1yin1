@@ -1,7 +1,7 @@
 class BadWords
   def self.bad_words_list
-    @bad_words_list ||= if ENV['PIN1YIN1_BAD_WORDS_FILE']
-                          File.read(ENV['PIN1YIN1_BAD_WORDS_FILE']).split
+    @bad_words_list ||= if ENV['RAILS_BAD_WORDS_FILE']
+                          File.read(ENV['RAILS_BAD_WORDS_FILE']).split
                         else
                           []
                         end

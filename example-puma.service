@@ -1,0 +1,13 @@
+[Unit]
+Description=puma
+After=network.target
+
+[Service]
+User=myuser
+WorkingDirectory=/home/myuser
+ExecStart=/home/myuser/server.sh
+Type=exec
+Restart=always
+
+[Install]
+WantedBy=default.target
